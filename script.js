@@ -1,7 +1,7 @@
 // Initialize variables for authorize function
 var TOKEN = "";
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
-var redirect_uri = "https://crchew.github.io/spotify-clone-tutorial/";
+var redirect_uri = "http://127.0.0.1:5500/";
 var scope = "user-read-private user-read-email user-top-read";
 
 function authorize() {
