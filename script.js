@@ -86,7 +86,11 @@ async function fetchUserTopItems() {
     });
     var data = await response.json();
     console.log("User top items", data);
-    displayUserTopItems(data); // Display user top items
+    if (data && data.items && data.items.length) {
+      displayUserTopItems(data); // Display user top items
+    } else {
+      console.log("No top items found or data structure is different", data);
+    }
   } catch (error) {
     alert("Something went wrong: " + error.message);
     console.log(error);
@@ -105,7 +109,11 @@ async function fetchNewReleases() {
     });
     var data = await response.json();
     console.log("New releases", data);
-    displayNewReleases(data); // Display new releases
+    if (data && data.albums && data.albums.items && data.albums.items.length) {
+      displayNewReleases(data); // Display new releases
+    } else {
+      console.log("No new releases found or data structure is different", data);
+    }
   } catch (error) {
     alert("Something went wrong: " + error.message);
     console.log(error);
@@ -124,7 +132,11 @@ async function fetchFeaturedPlaylists() {
     });
     var data = await response.json();
     console.log("Featured playlists", data);
-    displayFeaturedPlaylists(data); // Display featured playlists
+    if (data && data.playlists && data.playlists.items && data.playlists.items.length) {
+      displayFeaturedPlaylists(data); // Display featured playlists
+    } else {
+      console.log("No featured playlists found or data structure is different", data);
+    }
   } catch (error) {
     alert("Something went wrong: " + error.message);
     console.log(error);
