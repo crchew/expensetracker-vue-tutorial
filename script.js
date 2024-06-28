@@ -1,5 +1,5 @@
 // Initialize variables for authorize function
-var TOKEN = localStorage.getItem("access_token");
+var token = localStorage.getItem("access_token");
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
 var redirect_uri = "https://spotify-clone-crchew.netlify.app";
 var scope = "user-read-private user-read-email user-top-read";
@@ -39,12 +39,9 @@ function checkTokenExpiration() {
 
 // Check for authorization completion to stop calling the authorize function
 window.addEventListener("load", function() {
-  TOKEN = extractTokenFromURI();
-  if (!TOKEN) {
-    TOKEN = localStorage.getItem("access_token");
-  }
-  if (TOKEN) {
-    console.log("Token", TOKEN);
+  TOKEN = extractTokenFromURI() || localStorage.getItem("access_token");
+  if (token) {
+    console.log("Token", token);
     fetchUserTopItems();
     fetchNewReleases();
     fetchFeaturedPlaylists();
@@ -83,7 +80,7 @@ async function fetchUserTopItems() {
     var response = await fetch(endpoint + "?limit=6", {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + TOKEN,
+        Authorization: "Bearer " + token,
       },
     });
     var data = await response.json();
@@ -106,7 +103,7 @@ async function fetchNewReleases() {
     var response = await fetch(endpoint + "?limit=6", {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + TOKEN,
+        Authorization: "Bearer " + token,
       },
     });
     var data = await response.json();
@@ -129,7 +126,7 @@ async function fetchFeaturedPlaylists() {
     var response = await fetch(endpoint + "?limit=6", {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + TOKEN,
+        Authorization: "Bearer " + token,
       },
     });
     var data = await response.json();
