@@ -12,7 +12,7 @@ function authorize() {
   window.location.href = url; 
 }
 
-unction extractTokenFromURI() {
+function extractTokenFromURI() {
   var hash = window.location.hash;
   if (hash && hash.includes("access_token")) {
     // Remove the leading '#access_token=' and split into key-value pairs
