@@ -18,7 +18,9 @@ function extractTokenFromURI() {
   if (hash && hash.includes("access_token")) {
     var url = hash.replace("#access_token=", "");
     var chunks = url.split("&");
-    var token = chunks[0];
+    var token = chunks[0].split("=")[1];
+    var expiresIn = chunks.find(chunk => chunk.startsWith("expires_in")).split("=")[1];
+    saveToken(token, expiresIn);
     return token;
   }
   return null;
@@ -34,17 +36,20 @@ function checkTokenExpiration() {
 }
 
 // Check for authorization completion to stop calling the authorize function
-window.addEventListener("load", function(){
+window.addEventListener("load", function() {
   TOKEN = extractTokenFromURI();
-  if (TOKEN){
-    console.log("Token", TOKEN)
+  if (!TOKEN) {
+    TOKEN = localStorage.getItem("access_token");
+  }
+  if (TOKEN) {
+    console.log("Token", TOKEN);
     fetchUserTopItems();
     fetchNewReleases();
     fetchFeaturedPlaylists();
   } else {
     authorize();
   }
-})
+});
 
 // Save token and expiration time to localStorage
 function saveToken(token, expiresIn) {
