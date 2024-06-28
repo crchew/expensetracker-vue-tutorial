@@ -1,5 +1,5 @@
 // Initialize variables for authorize function
-var TOKEN = "";
+var TOKEN = localStorage.getItem("access_token");
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
 var redirect_uri = "https://spotify-clone-crchew.netlify.app";
 var scope = "user-read-private user-read-email user-top-read";
@@ -22,6 +22,8 @@ function extractTokenFromURI() {
     var expiresIn = chunks.find(chunk => chunk.startsWith("expires_in")).split("=")[1];
     saveToken(token, expiresIn);
     return token;
+  } else {
+    console.error("Failed to retrieve access token from URL fragment");
   }
   return null;
 }
