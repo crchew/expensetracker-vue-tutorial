@@ -1,5 +1,4 @@
 // Initialize variables for authorize function
-var token = localStorage.getItem("access_token");
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
 var redirect_uri = "https://spotify-clone-crchew.netlify.app";
 var scope = "user-read-private user-read-email user-top-read";
@@ -39,7 +38,7 @@ function checkTokenExpiration() {
 
 // Check for authorization completion to stop calling the authorize function
 window.addEventListener("load", function() {
-  TOKEN = extractTokenFromURI() || localStorage.getItem("access_token");
+  token = extractTokenFromURI() || localStorage.getItem("access_token");
   if (token) {
     console.log("Token", token);
     fetchUserTopItems();
