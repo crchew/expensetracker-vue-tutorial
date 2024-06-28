@@ -1,6 +1,6 @@
 // Initialize variables for authorize function
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
-var redirect_uri = "https://spotify-clone-crchew.netlify.app";
+var redirect_uri = "https://crchew.github.io/spotify-clone-tutorial/";
 var scope = "user-read-private user-read-email user-top-read";
 
 function authorize() {
