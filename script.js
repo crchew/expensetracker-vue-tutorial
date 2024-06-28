@@ -39,7 +39,9 @@ function checkTokenExpiration() {
 
 // Check for authorization completion to stop calling the authorize function
 window.addEventListener("load", function() {
-  token = extractTokenFromURI() || localStorage.getItem("access_token");
+  var token = extractTokenFromURI() || localStorage.getItem("access_token");
+  console.log("Token after extraction:", token);
+
   if (token) {
     console.log("Token", token);
     fetchUserTopItems();
