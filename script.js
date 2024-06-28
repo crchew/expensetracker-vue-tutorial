@@ -27,7 +27,7 @@ function extractTokenFromURI() {
 // Check for token expiration and reauthorize if needed
 function checkTokenExpiration() {
   var expirationTime = localStorage.getItem("token_expiration");
-  if (expirationTime && Date.now() > parseInt(expirationTime)) {
+  if (expirationTime && !isNaN(expirationTime) && Date.now() > parseInt(expirationTime)) {
     localStorage.removeItem("access_token");
     localStorage.removeItem("token_expiration");
     token = null;
