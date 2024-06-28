@@ -9,7 +9,7 @@ function authorize() {
   url += "&client_id=" + encodeURIComponent(client_id);
   url += "&scope=" + encodeURIComponent(scope);
   url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
-  window.open(url, "_self");
+  window.location.href;
 }
 
 function extractTokenFromURI() {
