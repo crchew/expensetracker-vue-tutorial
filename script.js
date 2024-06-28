@@ -12,7 +12,6 @@ function authorize() {
   window.location.href = url; 
 }
 
-
 function extractTokenFromURI() {
   var hash = window.location.hash;
   if (hash && hash.includes("access_token")) {
@@ -43,7 +42,6 @@ window.addEventListener("load", function() {
   console.log("Token after extraction:", token);
 
   if (token) {
-    console.log("Token", token);
     fetchUserTopItems();
     fetchNewReleases();
     fetchFeaturedPlaylists();
