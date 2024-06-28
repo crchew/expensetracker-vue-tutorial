@@ -1,5 +1,5 @@
 // Initialize variables for authorize function
-var token = null;
+var token = localStorage.getItem("access_token");
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
 var redirect_uri = "https://crchew.github.io/spotify-clone-tutorial/";
 var scope = "user-read-private user-read-email user-top-read";
@@ -16,32 +16,21 @@ function authorize() {
 function extractTokenFromURI() {
   var hash = window.location.hash;
   if (hash && hash.includes("access_token")) {
-    // Remove the leading '#access_token=' and split into key-value pairs
-    var url = hash.replace("#access_token=", "");
-    var chunks = url.split("&");
-
-    // Extract token and expiresIn from the chunks
-    var token = chunks[0].split("=")[1];
-    var expiresIn = chunks.find(chunk => chunk.startsWith("expires_in")).split("=")[1];
-
-    // Check if both token and expiresIn are available
-    if (token && expiresIn) {
-      saveToken(token, expiresIn);
-      return token;
-    } else {
-      console.error("Failed to extract access token or expires_in from URL fragment");
-    }
-  } else {
-    console.error("Failed to find access_token in URL fragment");
+    var url = hash.replace("#access_token=", "").split("&")[0];
+    var token = url.split("=")[1];
+    saveToken(token);
+    return token;
   }
-  return null; // Return null if access token extraction fails
+  return null;
 }
 
 // Check for token expiration and reauthorize if needed
 function checkTokenExpiration() {
   var expirationTime = localStorage.getItem("token_expiration");
   if (expirationTime && Date.now() > parseInt(expirationTime)) {
-    // Token has expired, reauthorize
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("token_expiration");
+    token = null;
     authorize();
   }
 }
