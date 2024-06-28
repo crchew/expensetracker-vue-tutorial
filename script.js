@@ -1,4 +1,5 @@
 // Initialize variables for authorize function
+var token = null;
 var client_id = "5a75f049e9d940a8ad4b6738f9365b4b";
 var redirect_uri = "https://crchew.github.io/spotify-clone-tutorial/";
 var scope = "user-read-private user-read-email user-top-read";
@@ -47,15 +48,26 @@ function checkTokenExpiration() {
 
 // Check for authorization completion to stop calling the authorize function
 window.addEventListener("load", function() {
-  var token = extractTokenFromURI() || localStorage.getItem("access_token");
-  console.log("Token after extraction:", token);
-
-  if (token) {
+  localStorage.getItem("access_token");
+  if (!token) {
+    // Token not found in localStorage, try extracting from URI
+    token = extractTokenFromURI();
+    if (token) {
+      // Token extracted successfully, save to localStorage
+      console.log("Token extracted:", token);
+      fetchUserTopItems();
+      fetchNewReleases();
+      fetchFeaturedPlaylists();
+    } else {
+      authorize();
+    }
+  } else {
+    // Token found in localStorage, check expiration
+    console.log("Token from localStorage:", token);
+    checkTokenExpiration();
     fetchUserTopItems();
     fetchNewReleases();
     fetchFeaturedPlaylists();
-  } else {
-    authorize();
   }
 });
 
