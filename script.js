@@ -9,8 +9,9 @@ function authorize() {
   url += "&client_id=" + encodeURIComponent(client_id);
   url += "&scope=" + encodeURIComponent(scope);
   url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
-  window.location.href;
+  window.location.href = url; 
 }
+
 
 function extractTokenFromURI() {
   var hash = window.location.hash;
