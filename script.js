@@ -12,19 +12,28 @@ function authorize() {
   window.location.href = url; 
 }
 
-function extractTokenFromURI() {
+unction extractTokenFromURI() {
   var hash = window.location.hash;
   if (hash && hash.includes("access_token")) {
+    // Remove the leading '#access_token=' and split into key-value pairs
     var url = hash.replace("#access_token=", "");
     var chunks = url.split("&");
+
+    // Extract token and expiresIn from the chunks
     var token = chunks[0].split("=")[1];
     var expiresIn = chunks.find(chunk => chunk.startsWith("expires_in")).split("=")[1];
-    saveToken(token, expiresIn);
-    return token;
+
+    // Check if both token and expiresIn are available
+    if (token && expiresIn) {
+      saveToken(token, expiresIn);
+      return token;
+    } else {
+      console.error("Failed to extract access token or expires_in from URL fragment");
+    }
   } else {
-    console.error("Failed to retrieve access token from URL fragment");
+    console.error("Failed to find access_token in URL fragment");
   }
-  return null;
+  return null; // Return null if access token extraction fails
 }
 
 // Check for token expiration and reauthorize if needed
